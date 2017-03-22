@@ -1,19 +1,14 @@
 language: generic
-before_script:
-  - git fetch origin gh-pages
-  - git checkout gh-pages
 script:
-  - .ci/pull.sh config.csv
+  - echo "Nothing"
 before_deploy:
-  - openssl aes-256-cbc -K $encrypted_c404cd1ce44c_key -iv $encrypted_c404cd1ce44c_iv -in .ci/secret.enc -out .ci/secret -d
+  - openssl aes-256-cbc -K $encrypted_c404cd1ce44c_key -iv $encrypted_c404cd1ce44c_iv -in secret.enc -out secret -d
   - eval "$(ssh-agent -s)"
-  - chmod 600 .ci/secret
-  - ssh-add .ci/secret
-  - git config --global user.email "travis@travis-ci.org"
-  - git config --global user.name "travis-ci"
+  - chmod 600 secret
+  - ssh-add secret
 deploy:
   - provider: script
     skip_cleanup: true
-    script: git push
+    script: ./deploy.sh
     on:
-      branch: gh-pages
+      branch: master
