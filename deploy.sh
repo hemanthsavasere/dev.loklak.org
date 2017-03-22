@@ -10,3 +10,6 @@ cd $HOME/pages
 
 echo "Pulling subtrees ..."
 .ci/pull.sh config.csv
+
+echo "Pushing changes ..."
+git push -f
